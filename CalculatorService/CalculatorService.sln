@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.Server", "Calcul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorService.Client", "CalculatorService.Client\CalculatorService.Client.csproj", "{1D666491-4687-4BF9-9C04-5C4AE141D18A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorService.Models", "CalculatorService.Models\CalculatorService.Models.csproj", "{11E8C00F-0C7A-4FC9-8198-BFB9A1EF1EDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1D666491-4687-4BF9-9C04-5C4AE141D18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D666491-4687-4BF9-9C04-5C4AE141D18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D666491-4687-4BF9-9C04-5C4AE141D18A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11E8C00F-0C7A-4FC9-8198-BFB9A1EF1EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E8C00F-0C7A-4FC9-8198-BFB9A1EF1EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E8C00F-0C7A-4FC9-8198-BFB9A1EF1EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E8C00F-0C7A-4FC9-8198-BFB9A1EF1EDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

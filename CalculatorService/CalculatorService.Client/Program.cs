@@ -1,7 +1,9 @@
 ﻿namespace CalculatorService.Client
 {
+    using CalculatorService.Client.Enums;
     using CalculatorService.Client.Services;
     using CalculatorService.Client.Services.Contracts;
+    using CalculatorService.Models;
     using System;
     using System.Collections.Generic;
 
@@ -14,7 +16,7 @@
 
             void PrintResult(double resultValue) => Console.WriteLine($"The result is : {resultValue} ");
             
-            List<double> GetNumbers()
+            List<double> GetNumbersSum()
             {
                 List<double> listNumbers = new List<double>();
 
@@ -37,6 +39,38 @@
                     return listNumbers;
              }
 
+            SubEntity GetNumbersSub()
+            {
+                var subModel = new SubEntity();
+                bool Iscomplete = false;
+              
+                while (!Iscomplete)
+                {
+                    Console.WriteLine("Write the Minuend");
+                    string readNumberOrResult = Console.ReadLine();
+
+                    if (double.TryParse(readNumberOrResult, out double Minuend))
+                        subModel.Minuend = Minuend;
+                    else
+                        Console.WriteLine("Invalid Value");
+
+                    Console.WriteLine("Write the Subtrahend");
+                    readNumberOrResult = Console.ReadLine();
+
+                    if (double.TryParse(readNumberOrResult, out double Subtrahend))
+                    {
+                        subModel.Subtrahend = Subtrahend;
+                        Iscomplete = true;
+                    }
+                    else
+                        Console.WriteLine("Invalid Value");
+
+                }
+
+                return subModel;
+            }
+
+
             #endregion
 
 
@@ -44,38 +78,49 @@
             ICalculatorServer calculatorServer = new CalculatorServer();
 
             string statusApp = string.Empty;
-            string calculatorMethod = string.Empty;
+            OperationType calculatorMethod = OperationType.NONE;
 
 
             Console.WriteLine("WELCOME TO CALCULATOR APP");
 
             while (statusApp.ToLower() != "exit")
             {
-                Console.WriteLine("choose on opetation (add, sub, sqt) use \"exit\" to finish ");
+                Console.WriteLine("choose on opetation (ADD, SUB, MULT) use \"exit\" to finish ");
 
                 string readMethod = Console.ReadLine();
 
-                if (readMethod.Equals("add") || 
-                    readMethod.Equals("sub") || 
-                    readMethod.Equals("sqt"))
+                if (Enum.TryParse<OperationType>(readMethod, out OperationType ExtractMethod))
                 {
-                    calculatorMethod = readMethod;
+                    calculatorMethod = ExtractMethod;
                 }
-                             
 
                 switch (calculatorMethod)
                 {
-                    case "add":
-                        List<double> listNumbers = GetNumbers();
+                    case OperationType.ADD:
+
+                        List<double> listNumbers = GetNumbersSum();
 
                         PrintResult(calculatorServer.Add(listNumbers).Result);
 
                         break;
-                    case "sub":
+                    case OperationType.SUB:
+
+                        SubEntity subModel = GetNumbersSub();
+
+                        PrintResult(calculatorServer.Sub(subModel).Result);
+
                         break;
-                    case "sqt":
+                    case OperationType.MULT:
                         break;
-                }
+                    case OperationType.DIV:
+                        break;
+                    case OperationType.SQRT:
+                        break;
+                    case OperationType.NONE:
+                    default:
+                        break;
+                }                             
+
             }
 
            

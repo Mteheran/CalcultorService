@@ -5,10 +5,11 @@
     using System.Net.Http;
     using System.Threading.Tasks;
     using Newtonsoft.Json;
-    
+    using CalculatorService.Models;
+
     public class CalculatorServer: ICalculatorServer
     {
-       HttpClient _httpClient => new HttpClient();
+        HttpClient _httpClient => new HttpClient();
 
        string serviceUri = "calculator";
        string baseUrl = "http://localhost:50726/";
@@ -26,6 +27,13 @@
 
             return JsonConvert.DeserializeObject<double>(await response.Content.ReadAsStringAsync());
        }
+
+        public async Task<double> Sub(SubEntity SubModel)
+        {
+            var response = await _httpClient.PostAsync(buildUrl("sub"), builContent(SubModel));
+
+            return JsonConvert.DeserializeObject<double>(await response.Content.ReadAsStringAsync());
+        }
 
     }
 }
