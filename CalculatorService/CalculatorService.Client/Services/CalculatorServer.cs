@@ -28,9 +28,24 @@
             return JsonConvert.DeserializeObject<double>(await response.Content.ReadAsStringAsync());
        }
 
-        public async Task<double> Sub(SubEntity SubModel)
+        public async Task<double> Sub(SubModel SubModel)
         {
             var response = await _httpClient.PostAsync(buildUrl("sub"), builContent(SubModel));
+
+            return JsonConvert.DeserializeObject<double>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<double> Mult(IEnumerable<double> numericList)
+        {
+            var response = await _httpClient.PostAsync(buildUrl("mult"), builContent(numericList));
+
+            return JsonConvert.DeserializeObject<double>(await response.Content.ReadAsStringAsync());
+        }
+
+
+        public async Task<double> Div(DivModel divModel)
+        {
+            var response = await _httpClient.PostAsync(buildUrl("div"), builContent(divModel));
 
             return JsonConvert.DeserializeObject<double>(await response.Content.ReadAsStringAsync());
         }

@@ -16,6 +16,14 @@
 
        [HttpPost]
        [Route("sub")]
-       public double Sub([FromBody] SubEntity subModel) => (subModel.Minuend - subModel.Subtrahend);
+       public double Sub([FromBody] SubModel subModel) => (subModel.Minuend - subModel.Subtrahend);
+
+       [HttpPost]
+       [Route("mult")]
+       public double Mult([FromBody] IEnumerable<double> numericList) => numericList.ToList().Aggregate((a, b) => a * b);
+
+       [HttpPost]
+       [Route("div")]
+       public double Div([FromBody] DivModel divModel) => (divModel.Dividend/ divModel.Divisor);
     }
 }

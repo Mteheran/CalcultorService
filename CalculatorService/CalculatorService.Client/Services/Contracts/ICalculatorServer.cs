@@ -8,6 +8,10 @@
     {
         Task<double> Add(IEnumerable<double> numericList);
 
-        Task<double> Sub(SubEntity SubModel);
+        Task<double> Sub(SubModel SubModel);
+
+        Task<double> Mult(IEnumerable<double> numericList);
+
+        Task<double> Div(DivModel divModel);
     }
 }

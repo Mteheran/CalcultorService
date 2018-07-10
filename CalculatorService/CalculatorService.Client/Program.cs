@@ -9,6 +9,12 @@
 
     class Program
     {
+        //init services
+        static ICalculatorServer calculatorServer => new CalculatorServer();
+
+        static string statusApp = string.Empty;
+        static OperationType calculatorMethod = OperationType.NONE;
+
         static void Main(string[] args)
         {
 
@@ -16,7 +22,7 @@
 
             void PrintResult(double resultValue) => Console.WriteLine($"The result is : {resultValue} ");
             
-            List<double> GetNumbersSum()
+            List<double> GetListOfNumbers()
             {
                 List<double> listNumbers = new List<double>();
 
@@ -39,53 +45,82 @@
                     return listNumbers;
              }
 
-            SubEntity GetNumbersSub()
+            SubModel GetNumbersSub()
             {
-                var subModel = new SubEntity();
+                var subModel = new SubModel();
                 bool Iscomplete = false;
               
                 while (!Iscomplete)
                 {
-                    Console.WriteLine("Write the Minuend");
+                    Console.WriteLine("set the Minuend");
                     string readNumberOrResult = Console.ReadLine();
 
                     if (double.TryParse(readNumberOrResult, out double Minuend))
-                        subModel.Minuend = Minuend;
-                    else
-                        Console.WriteLine("Invalid Value");
-
-                    Console.WriteLine("Write the Subtrahend");
-                    readNumberOrResult = Console.ReadLine();
-
-                    if (double.TryParse(readNumberOrResult, out double Subtrahend))
                     {
-                        subModel.Subtrahend = Subtrahend;
-                        Iscomplete = true;
+                        subModel.Minuend = Minuend;
+
+                        Console.WriteLine("set the Subtrahend");
+                        readNumberOrResult = Console.ReadLine();
+
+                        if (double.TryParse(readNumberOrResult, out double Subtrahend))
+                        {
+                            subModel.Subtrahend = Subtrahend;
+                            Iscomplete = true;
+                        }
+                        else
+                            Console.WriteLine("Invalid Value");
+
                     }
                     else
-                        Console.WriteLine("Invalid Value");
+                        Console.WriteLine("Invalid Value");                  
 
                 }
 
                 return subModel;
             }
 
+            DivModel GetNumbersDiv()
+            {
+                var subModel = new DivModel();
+                bool Iscomplete = false;
 
-            #endregion
+                while (!Iscomplete)
+                {
+                    Console.WriteLine("set the Dividend");
+                    string readNumberOrResult = Console.ReadLine();
 
+                    if (double.TryParse(readNumberOrResult, out double Minuend))
+                    {
+                        subModel.Dividend = Minuend;
 
-            //init services
-            ICalculatorServer calculatorServer = new CalculatorServer();
+                        Console.WriteLine("set the Divisor");
+                        readNumberOrResult = Console.ReadLine();
 
-            string statusApp = string.Empty;
-            OperationType calculatorMethod = OperationType.NONE;
+                        if (double.TryParse(readNumberOrResult, out double Subtrahend))
+                        {
+                            subModel.Divisor = Subtrahend;
+                            Iscomplete = true;
+                        }
+                        else
+                            Console.WriteLine("Invalid Value");
+
+                    }
+                    else
+                        Console.WriteLine("Invalid Value");                  
+
+                }
+
+                return subModel;
+            }
+
+            #endregion                 
 
 
             Console.WriteLine("WELCOME TO CALCULATOR APP");
 
             while (statusApp.ToLower() != "exit")
             {
-                Console.WriteLine("choose on opetation (ADD, SUB, MULT) use \"exit\" to finish ");
+                Console.WriteLine("choose on opetation (ADD, SUB, MULT, DIV) use \"exit\" to finish ");
 
                 string readMethod = Console.ReadLine();
 
@@ -98,21 +133,31 @@
                 {
                     case OperationType.ADD:
 
-                        List<double> listNumbers = GetNumbersSum();
+                        List<double> listNumbers = GetListOfNumbers();
 
                         PrintResult(calculatorServer.Add(listNumbers).Result);
 
                         break;
                     case OperationType.SUB:
 
-                        SubEntity subModel = GetNumbersSub();
+                        SubModel subModel = GetNumbersSub();
 
                         PrintResult(calculatorServer.Sub(subModel).Result);
 
                         break;
                     case OperationType.MULT:
+
+                        List<double> listNumbersMULT = GetListOfNumbers();
+
+                        PrintResult(calculatorServer.Mult(listNumbersMULT).Result);
+
                         break;
                     case OperationType.DIV:
+
+                        DivModel divModel = GetNumbersDiv();
+
+                        PrintResult(calculatorServer.Div(divModel).Result);
+
                         break;
                     case OperationType.SQRT:
                         break;
