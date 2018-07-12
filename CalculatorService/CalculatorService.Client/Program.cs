@@ -6,6 +6,7 @@
     using CalculatorService.Models;
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     class Program
     {
@@ -15,7 +16,7 @@
         static string statusApp = string.Empty;
         static OperationType calculatorMethod = OperationType.NONE;
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
 
             #region Local Functions
@@ -135,7 +136,7 @@
 
             void GetTrackingId()
             {
-                    Console.WriteLine("Enter the TrackingId");
+                    Console.WriteLine("Enter the TrackingId or press enter to continue");
                     string trackingId = Console.ReadLine();
 
                     calculatorServer.TrackingID = trackingId;
@@ -175,7 +176,7 @@
 
                         SubModel subModel = GetNumbersSub();
 
-                        PrintResult(calculatorServer.Sub(subModel).Result);
+                        PrintResult(await calculatorServer.Sub(subModel));
 
                         break;
                     case OperationType.MULT:
@@ -184,7 +185,7 @@
 
                         List<double> listNumbersMULT = GetListOfNumbers();
 
-                        PrintResult(calculatorServer.Mult(listNumbersMULT).Result);
+                        PrintResult(await calculatorServer.Mult(listNumbersMULT));
 
                         break;
                     case OperationType.DIV:
@@ -193,7 +194,7 @@
 
                         DivModel divModel = GetNumbersDiv();
 
-                        PrintResult(calculatorServer.Div(divModel).Result);
+                        PrintResult(await calculatorServer.Div(divModel));
 
                         break;
                     case OperationType.SQRT:
@@ -202,7 +203,7 @@
 
                         var numbersqr = GetNumberSqrt();
 
-                        PrintResult(calculatorServer.Sqrt(numbersqr).Result);
+                        PrintResult(await calculatorServer.Sqrt(numbersqr));
 
                         break;
                     case OperationType.NONE:
@@ -210,9 +211,7 @@
                         break;
                 }                             
 
-            }
-
-           
+            }           
 
             Console.ReadLine();
         }
