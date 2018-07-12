@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Calculator.Server.Data;
+using Calculator.Server.Journal;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,8 @@ namespace Calculator.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddTransient<IJournalService, JournalService>();
+            services.AddTransient<IJournalDatabase, JournalDatabase>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

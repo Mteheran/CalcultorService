@@ -30,7 +30,7 @@
 
                     while (result == string.Empty)
                     {
-                        Console.WriteLine("Write a number to add on the list or \"result\" to complete the operation");
+                        Console.WriteLine("enter a number to add on the list or \"result\" to complete the operation");
                         string readNumberOrResult = Console.ReadLine();
 
                     if (double.TryParse(readNumberOrResult, out double Number))
@@ -52,14 +52,14 @@
               
                 while (!Iscomplete)
                 {
-                    Console.WriteLine("set the Minuend");
+                    Console.WriteLine("enter the Minuend");
                     string readNumberOrResult = Console.ReadLine();
 
                     if (double.TryParse(readNumberOrResult, out double Minuend))
                     {
                         subModel.Minuend = Minuend;
 
-                        Console.WriteLine("set the Subtrahend");
+                        Console.WriteLine("enter the Subtrahend");
                         readNumberOrResult = Console.ReadLine();
 
                         if (double.TryParse(readNumberOrResult, out double Subtrahend))
@@ -86,14 +86,14 @@
 
                 while (!Iscomplete)
                 {
-                    Console.WriteLine("set the Dividend");
+                    Console.WriteLine("enter the Dividend");
                     string readNumberOrResult = Console.ReadLine();
 
                     if (double.TryParse(readNumberOrResult, out double Minuend))
                     {
                         subModel.Dividend = Minuend;
 
-                        Console.WriteLine("set the Divisor");
+                        Console.WriteLine("enter the Divisor");
                         readNumberOrResult = Console.ReadLine();
 
                         if (double.TryParse(readNumberOrResult, out double Subtrahend))
@@ -113,6 +113,35 @@
                 return subModel;
             }
 
+            double GetNumberSqrt()
+            {
+                var subModel = new DivModel();
+               
+                while (true)
+                {
+                    Console.WriteLine("enter the number");
+                    string readNumberOrResult = Console.ReadLine();
+
+                    if (double.TryParse(readNumberOrResult, out double numberSqrt))
+                    {
+                        return numberSqrt;
+
+                    }
+                    else
+                        Console.WriteLine("Invalid Value");
+
+                }
+            }
+
+            void GetTrackingId()
+            {
+                    Console.WriteLine("Enter the TrackingId");
+                    string trackingId = Console.ReadLine();
+
+                    calculatorServer.TrackingID = trackingId;
+            }
+
+
             #endregion                 
 
 
@@ -120,7 +149,7 @@
 
             while (statusApp.ToLower() != "exit")
             {
-                Console.WriteLine("choose on opetation (ADD, SUB, MULT, DIV) use \"exit\" to finish ");
+                Console.WriteLine("choose on opetation (ADD, SUB, MULT, DIV, SQRT) use \"exit\" to finish ");
 
                 string readMethod = Console.ReadLine();
 
@@ -133,12 +162,16 @@
                 {
                     case OperationType.ADD:
 
+                        GetTrackingId();
+
                         List<double> listNumbers = GetListOfNumbers();
 
                         PrintResult(calculatorServer.Add(listNumbers).Result);
 
                         break;
                     case OperationType.SUB:
+
+                        GetTrackingId();
 
                         SubModel subModel = GetNumbersSub();
 
@@ -147,6 +180,8 @@
                         break;
                     case OperationType.MULT:
 
+                        GetTrackingId();
+
                         List<double> listNumbersMULT = GetListOfNumbers();
 
                         PrintResult(calculatorServer.Mult(listNumbersMULT).Result);
@@ -154,12 +189,21 @@
                         break;
                     case OperationType.DIV:
 
+                        GetTrackingId();
+
                         DivModel divModel = GetNumbersDiv();
 
                         PrintResult(calculatorServer.Div(divModel).Result);
 
                         break;
                     case OperationType.SQRT:
+
+                        GetTrackingId();
+
+                        var numbersqr = GetNumberSqrt();
+
+                        PrintResult(calculatorServer.Sqrt(numbersqr).Result);
+
                         break;
                     case OperationType.NONE:
                     default:
